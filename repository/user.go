@@ -11,7 +11,7 @@ type Repository interface{
 	Save(user model.User) (model.User, error)
 	FindByEmail(email string) (model.User, error)
 	FindById(id string) (model.User, error)
-	// UpdateProfile(user model.User) (model.User, error)
+	UpdateProfile(id int, user model.User, userUpdate interface{}) (model.User, error)
 }
 
 type repository struct{
@@ -61,12 +61,13 @@ func (r *repository) FindById(id string) (model.User,  error){
 	return user, nil
 }
 
-// func (r *repository) UpdateProfile(user model.User) (model.User, error){
-// 	err := r.db.Save(&user).Error
+func (r *repository) UpdateProfile(id int, user model.User, userUpdate interface{}) (model.User, error){
+	r.db.Find(&user, "id=?",id)
+	err := r.db.Where("id=?",id).Updates(userUpdate).Error
 
-// 	if err != nil {
-// 		return user, err
-// 	}
+	if err != nil {
+		return user, err
+	}
 
-// 	return user, nil
-// }
+	return user, err
+}

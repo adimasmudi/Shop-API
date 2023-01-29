@@ -18,7 +18,7 @@ type Service interface {
 	RegisterUser(input input.RegisterUserInput) (model.User, string, error)
 	Login(input input.LoginUserInput) (model.User, string, error)
 	GetProfile(tokenString string) (model.User, error)
-	// UpdateProfile(input input.UpdateProfileInput) (model.User, error)
+	UpdateProfile(id int, input input.UpdateProfileInput) (model.User, error)
 }
 
 type service struct {
@@ -129,23 +129,26 @@ func (s *service) GetProfile(tokenString string)(model.User, error){
 	return user, err
 }
 
-// func (s *service) UpdateProfile(input input.UpdateProfileInput)(model.User, error){
-// 	user := model.User{}
+func (s *service) UpdateProfile(id int, input input.UpdateProfileInput)(model.User, error){
+	userUpdate := new(model.User)
 
-// 	user.Nama = input.Nama
-// 	user.NoTelp = input.NoTelp
-// 	user.TanggalLahir = input.TanggalLahir
-// 	user.Tentang = input.Tentang
-// 	user.IDProvinsi = input.IDProvinsi
-// 	user.IDKota = input.IDKota
-// 	user.Pekerjaan = input.Pekerjaan
+	var user model.User
 
-// 	updatedUser, err := s.repository.UpdateProfile(user)
+	userUpdate.Nama = input.Nama
+	userUpdate.NoTelp = input.NoTelp
+	userUpdate.TanggalLahir = input.TanggalLahir
+	userUpdate.Tentang = input.Tentang
+	userUpdate.IDProvinsi = input.IDProvinsi
+	userUpdate.IDKota = input.IDKota
+	userUpdate.Pekerjaan = input.Pekerjaan
 
-// 	if err != nil{
-// 		return updatedUser, err
-// 	}
 
-// 	return updatedUser, nil
-// }
+	updatedUser, err := s.repository.UpdateProfile(id,user,userUpdate)
+
+	if err != nil{
+		return updatedUser, err
+	}
+
+	return updatedUser, nil
+}
 

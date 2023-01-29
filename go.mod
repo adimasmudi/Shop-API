@@ -3,7 +3,7 @@ module Shop-API
 go 1.19
 
 require (
-	github.com/gofiber/fiber v1.14.6
+	github.com/gofiber/fiber v1.14.2
 	github.com/gofiber/jwt v0.2.0
 	github.com/golang-jwt/jwt v3.2.2+incompatible
 	github.com/joho/godotenv v1.4.0
@@ -16,7 +16,7 @@ require (
 	github.com/andybalholm/brotli v1.0.4 // indirect
 	github.com/dgrijalva/jwt-go v3.2.0+incompatible // indirect
 	github.com/go-sql-driver/mysql v1.7.0 // indirect
-	github.com/gofiber/utils v1.0.1 // indirect
+	github.com/gofiber/utils v0.0.9 // indirect
 	github.com/gorilla/schema v1.2.0 // indirect
 	github.com/jinzhu/inflection v1.0.0 // indirect
 	github.com/jinzhu/now v1.1.5 // indirect

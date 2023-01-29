@@ -19,12 +19,12 @@ type LoginUserInput struct {
 	KataSandi string `json:"kataSandi" binding:"required"`
 }
 
-// type UpdateProfileInput struct {
-// 	Nama         string `json:"nama" `
-// 	NoTelp       string `json:"no_telp" `
-// 	TanggalLahir string `json:"tanggalLahir" `
-// 	Tentang      string `json:"tentang" `
-// 	Pekerjaan    string `json:"pekerjaan" `
-// 	IDProvinsi   int    `json:"idProvinsi" `
-// 	IDKota       int    `json:"idKota" `
-// }
+type UpdateProfileInput struct {
+	Nama         string `json:"nama" `
+	NoTelp       string `json:"no_telp" `
+	TanggalLahir string `json:"tanggalLahir" `
+	Tentang      string `json:"tentang" `
+	Pekerjaan    string `json:"pekerjaan" `
+	IDProvinsi   int    `json:"idProvinsi" `
+	IDKota       int    `json:"idKota" `
+}

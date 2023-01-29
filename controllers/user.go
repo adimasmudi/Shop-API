@@ -102,35 +102,44 @@ func (h *userHandler) GetProfile(c *fiber.Ctx){
 	c.Status(http.StatusOK).JSON(response)
 }
 
-// func (h *userHandler) UpdateProfile(c *fiber.Ctx){
-// 	_, cancel := context.WithTimeout(context.Background(), 10*time.Second)
+func (h *userHandler) UpdateProfile(c *fiber.Ctx){
+	_, cancel := context.WithTimeout(context.Background(), 10*time.Second)
 
-// 	defer cancel()
+	defer cancel()
 
-// 	authorizationHeader := c.Get("Authorization")
+	authorizationHeader := c.Get("Authorization")
 
-// 	tokenString := strings.Split(authorizationHeader," ")[1]
+	tokenString := strings.Split(authorizationHeader," ")[1]
 
-// 	var input input.UpdateProfileInput
+	user, err := h.userService.GetProfile(tokenString)
 
-// 	//validate the request body
-// 	if err := c.BodyParser(&input); err != nil {
-// 		response := helper.APIResponse("Update Profile Failed", http.StatusBadRequest, "error", err)
-// 		c.Status(http.StatusBadRequest).JSON(response)
-// 		return
-// 	}
+	if err != nil{
+		response := helper.APIResponse("Can't get current user", http.StatusBadRequest, "error", err)
+		c.Status(http.StatusBadRequest).JSON(response)
+		return
+	}
 
-// 	newUser, err := h.userService.UpdateProfile(input)
 
-// 	if err != nil {
-// 		response := helper.APIResponse("Update Profile Failed", http.StatusBadRequest, "error", err)
-// 		c.Status(http.StatusBadRequest).JSON(response)
-// 		return
-// 	}
+	var input input.UpdateProfileInput
 
-// 	formatter := formatter.FormatUser(newUser, tokenString)
+	//validate the request body
+	if err := c.BodyParser(&input); err != nil {
+		response := helper.APIResponse("Update Profile Failed", http.StatusBadRequest, "error", err)
+		c.Status(http.StatusBadRequest).JSON(response)
+		return
+	}
 
-// 	response := helper.APIResponse("Account has been registered", http.StatusOK, "success", formatter)
+	newUser, err := h.userService.UpdateProfile(user.Id,input)
 
-// 	c.Status(http.StatusOK).JSON(response)
-// }
+	if err != nil {
+		response := helper.APIResponse("Update Profile Failed", http.StatusBadRequest, "error", err)
+		c.Status(http.StatusBadRequest).JSON(response)
+		return
+	}
+
+	formatter := formatter.FormatUser(newUser, tokenString)
+
+	response := helper.APIResponse("Account has been updated", http.StatusOK, "success", formatter)
+
+	c.Status(http.StatusOK).JSON(response)
+}
