@@ -1,5 +1,6 @@
 package input
 
+// User
 type RegisterUserInput struct {
 	Nama         string `json:"nama" binding:"required"`
 	KataSandi    string `json:"kataSandi" binding:"required"`
@@ -27,4 +28,11 @@ type UpdateProfileInput struct {
 	Pekerjaan    string `json:"pekerjaan" `
 	IDProvinsi   int    `json:"idProvinsi" `
 	IDKota       int    `json:"idKota" `
+}
+
+// Toko
+type AddToko struct{
+	IdUser int `json:"id_user"`
+	NamaToko string `json:"nama_toko"`
+	UrlToko string `json:"url_toko"`
 }

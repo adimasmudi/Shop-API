@@ -12,6 +12,7 @@ type Repository interface{
 	FindByEmail(email string) (model.User, error)
 	FindById(id string) (model.User, error)
 	UpdateProfile(id int, user model.User, userUpdate interface{}) (model.User, error)
+	SaveToko(toko model.Toko) (model.Toko, error)
 }
 
 type repository struct{
@@ -70,4 +71,14 @@ func (r *repository) UpdateProfile(id int, user model.User, userUpdate interface
 	}
 
 	return user, err
+}
+
+func (r *repository) SaveToko(toko model.Toko) (model.Toko, error) {
+	err := r.db.Create(&toko).Error
+
+	if err != nil {
+		return toko, err
+	}
+
+	return toko, nil
 }

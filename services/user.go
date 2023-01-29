@@ -19,6 +19,7 @@ type Service interface {
 	Login(input input.LoginUserInput) (model.User, string, error)
 	GetProfile(tokenString string) (model.User, error)
 	UpdateProfile(id int, input input.UpdateProfileInput) (model.User, error)
+	AddToko(user model.User) (model.Toko, error)
 }
 
 type service struct {
@@ -29,7 +30,8 @@ func NewService(repository repository.Repository) *service {
 	return &service{repository}
 }
 
-func (s *service) RegisterUser(input input.RegisterUserInput) (model.User, string, error) {
+
+func (s *service) RegisterUser(input input.RegisterUserInput) (model.User,string, error) {
 	user := model.User{}
 	user.Nama = input.Nama
 	user.Email = input.Email
@@ -53,8 +55,11 @@ func (s *service) RegisterUser(input input.RegisterUserInput) (model.User, strin
 	newUser, err := s.repository.Save(user)
 
 	if err != nil {
-		return newUser, "", err
+		return newUser,"", err
 	}
+
+	
+
 
 	token := jwt.NewWithClaims(jwt.SigningMethodHS256, jwt.MapClaims{
 		"Issuer" : strconv.Itoa(int(newUser.Id)),
@@ -70,6 +75,7 @@ func (s *service) RegisterUser(input input.RegisterUserInput) (model.User, strin
 
 	return newUser, tokenString, nil
 }
+
 
 func (s *service) Login(input input.LoginUserInput) (model.User, string, error) {
 	email := input.Email
@@ -150,5 +156,21 @@ func (s *service) UpdateProfile(id int, input input.UpdateProfileInput)(model.Us
 	}
 
 	return updatedUser, nil
+}
+
+func (s *service) AddToko(user model.User) (model.Toko, error) {
+	toko := model.Toko{}
+	toko.IdUser = user.Id
+	toko.NamaToko = "toko" + user.Nama
+	toko.UrlToko = ""
+
+	newToko, err := s.repository.SaveToko(toko)
+
+
+	if err != nil {
+		return newToko,err
+	}
+
+	return newToko, nil
 }
 

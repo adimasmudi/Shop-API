@@ -43,9 +43,19 @@ func (h *userHandler) Register(c *fiber.Ctx) {
 		return
 	}
 
+	
+	// add toko
+	newToko, err := h.userService.AddToko(newUser)
+
+	if err != nil{
+		response := helper.APIResponse("Register Account Failed", http.StatusBadRequest, "error", err)
+		c.Status(http.StatusBadRequest).JSON(response)
+		return
+	}
+
 	formatter := formatter.FormatUser(newUser, token)
 
-	response := helper.APIResponse("Account has been registered", http.StatusOK, "success", formatter)
+	response := helper.APIResponse("Account has been registered", http.StatusOK, "success", fiber.Map{"user" : formatter, "toko" : newToko})
 
 	c.Status(http.StatusOK).JSON(response)
 }
@@ -114,7 +124,7 @@ func (h *userHandler) UpdateProfile(c *fiber.Ctx){
 	user, err := h.userService.GetProfile(tokenString)
 
 	if err != nil{
-		response := helper.APIResponse("Can't get current user", http.StatusBadRequest, "error", err)
+		response := helper.APIResponse("Can't get current User", http.StatusBadRequest, "error", err)
 		c.Status(http.StatusBadRequest).JSON(response)
 		return
 	}
