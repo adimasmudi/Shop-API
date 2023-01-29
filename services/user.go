@@ -132,7 +132,7 @@ func (s *service) GetProfile(tokenString string)(model.User, error){
 		
 	user, err = s.repository.FindById(id)
 
-	return user, err
+	return user, nil
 }
 
 func (s *service) UpdateProfile(id int, input input.UpdateProfileInput)(model.User, error){

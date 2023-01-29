@@ -93,10 +93,8 @@ func (h *userHandler) Login(c *fiber.Ctx) {
 func (h *userHandler) GetProfile(c *fiber.Ctx){
 
 	authorizationHeader := c.Get("Authorization")
-
 	tokenString := strings.Split(authorizationHeader," ")[1]
 
-	
 	authUser, err := h.userService.GetProfile(tokenString)
 
 	if err != nil{

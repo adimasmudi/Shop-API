@@ -36,3 +36,8 @@ type AddToko struct{
 	NamaToko string `json:"nama_toko"`
 	UrlToko string `json:"url_toko"`
 }
+
+type UpdateTokoInput struct{
+	NamaToko string `json:"nama_toko" form:"nama_toko"`
+	UrlToko string `json:"url_toko" form:"url_toko"`
+}

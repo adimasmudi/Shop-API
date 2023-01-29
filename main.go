@@ -31,8 +31,8 @@ func main(){
 	api := app.Group("/api/v1")
 
 	// routes
-	// user
 	routes.UserRoute(api, db)
+	routes.TokoRouter(api, db)
 	
 
 	app.Listen(":6000")
