@@ -46,6 +46,24 @@ func (h *tokoHandler) GetMyToko(c *fiber.Ctx){
 	c.Status(http.StatusOK).JSON(response)
 }
 
+func (h *tokoHandler) GetAllToko(c *fiber.Ctx){
+	_, cancel := context.WithTimeout(context.Background(), 10*time.Second)
+
+	defer cancel()
+
+	allToko, err := h.tokoService.GetAllToko()
+
+	if err != nil{
+		response := helper.APIResponse("Failed to get all toko data", http.StatusBadRequest, "error", err)
+		c.Status(http.StatusBadRequest).JSON(response)
+		return
+	}
+
+	response := helper.APIResponse("get all toko success", http.StatusOK, "success", allToko)
+	
+	c.Status(http.StatusOK).JSON(response)
+}
+
 func (h *tokoHandler) UpdateToko(c *fiber.Ctx){
 	_, cancel := context.WithTimeout(context.Background(), 10*time.Second)
 

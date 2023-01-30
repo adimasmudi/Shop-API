@@ -17,5 +17,6 @@ func TokoRouter(api fiber.Router, db *gorm.DB){
 
 	// routes
 	api.Get("/toko",middleware.Auth(), tokoHandler.GetMyToko)
+	api.Get("/toko/all",tokoHandler.GetAllToko)
 	api.Put("/toko/:id_toko",middleware.Auth(),tokoHandler.UpdateToko)
 }

@@ -11,6 +11,7 @@ import (
 
 type ServiceToko interface {
 	GetMyToko(tokenString string) (model.Toko, model.User, error)
+	GetAllToko() ([]model.Toko, error)
 	UpdateToko(id int, input input.UpdateTokoInput) (model.Toko, error)
 }
 
@@ -54,6 +55,17 @@ func (s *serviceToko) GetMyToko(tokenString string)(model.Toko, model.User, erro
 	}
 
 	return toko, user, nil
+}
+
+func (s *serviceToko) GetAllToko() ([]model.Toko, error){
+	// get toko
+	toko, err := s.repositoryToko.GetAllToko()
+
+	if err != nil{
+		return toko, err
+	}
+
+	return toko, err
 }
 
 func (s *serviceToko) UpdateToko(id int, input input.UpdateTokoInput) (model.Toko, error){

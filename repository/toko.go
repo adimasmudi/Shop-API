@@ -10,6 +10,7 @@ import (
 type RepositoryToko interface {
 	FindUserById(id string)(model.User, error)
 	FindTokoByIdUser(id string)(model.Toko, error)
+	GetAllToko() ([]model.Toko, error)
 	UpdateToko(id int, toko model.Toko, tokoUpdate interface{}) (model.Toko, error)
 }
 
@@ -51,6 +52,13 @@ func (r *repositoryToko) FindTokoByIdUser(id string) (model.Toko,  error){
 	if err2 != nil{
 		return toko, err2
 	}
+
+	return toko, nil
+}
+
+func (r *repositoryToko) GetAllToko() ([]model.Toko, error){
+	var toko []model.Toko
+	r.db.Find(&toko)
 
 	return toko, nil
 }
